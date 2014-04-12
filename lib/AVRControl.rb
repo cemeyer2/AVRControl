@@ -1,5 +1,3 @@
 require "AVRControl/version"
-
-module AVRControl
-  # Your code goes here...
-end
+require "AVRControl/avr_command"
+require "AVRControl/avr_invoker"
