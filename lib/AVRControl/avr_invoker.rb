@@ -17,7 +17,7 @@ module AVRControl
                                 'Prompt' => '',
                                 'Telnetmode' => false,
                                 'Output_log' => 'out.log')
-      telnet.waitfor({:string => 'BridgeCo AG Telnet server'})
+      sleep 1
       telnet.cmd(command.to_s)
       sleep 1
       telnet.close

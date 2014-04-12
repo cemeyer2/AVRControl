@@ -10,4 +10,12 @@ describe 'Controlling my denon receiver' do
     invoker.invoke(command)
 
   end
+
+  it 'should not allow commands without enough params' do
+    command = AVRControl::AVRCommand.new('FOO', 5)
+    expect {
+      command.to_s
+    }.to raise_error(ArgumentError)
+  end
+
 end
