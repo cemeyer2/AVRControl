@@ -1,4 +1,5 @@
 require 'net/telnet'
+require 'socket'
 
 module AVRControl
 
@@ -9,18 +10,11 @@ module AVRControl
     end
 
     def invoke(command)
-
-      telnet = Net::Telnet::new('Host' => @host,
-                                'Timeout' => 10,
-                                'Port' => 23,
-                                'Binmode' => true,
-                                'Prompt' => '',
-                                'Telnetmode' => false,
-                                'Output_log' => 'out.log')
-      sleep 1
-      telnet.cmd(command.to_s)
-      sleep 1
-      telnet.close
+      TCPSocket.open(@host, 23) do |sock|
+        sleep 0.3
+        sock.puts command.to_s
+        sleep 0.3
+      end
     end
 
   end
