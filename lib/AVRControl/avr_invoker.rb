@@ -16,7 +16,7 @@ module AVRControl
           if command.response?
             sleep 0.5
             begin
-              command.response = sock.recv_nonblock 1024
+              command.response = sock.recv_nonblock(1024).chomp
             rescue => e
               #TODO: something here
             end

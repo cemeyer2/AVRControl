@@ -3,18 +3,20 @@ require '../lib/AVRControl'
 
 describe 'Controlling my denon receiver' do
 
-  it 'should be able to power it off' do
+  before :each do
+    @host = '192.168.1.75'
+    @invoker = AVRControl::AVRInvoker.new(@host)
+  end
 
-    invoker = AVRControl::AVRInvoker.new('192.168.1.75')
+  it 'should be able to power it off' do
     command = AVRControl::AVRCommand.new("PWSTANDBY")
-    invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_true
   end
 
   it 'should be able to query power' do
-    invoker = AVRControl::AVRInvoker.new('192.168.1.75')
     command = AVRControl::AVRCommand.for :main_query
     command.should_not be_nil
-    invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_true
     puts command.response
     command.response.should_not be_nil
   end
@@ -24,6 +26,15 @@ describe 'Controlling my denon receiver' do
     expect {
       command.to_s
     }.to raise_error(ArgumentError)
+  end
+
+  it 'should allow commands with enough params' do
+    cnt = 5
+    command = AVRControl::AVRCommand.new('DEADBEEF', cnt)
+    cnt.times { command << 'foo' }
+    expect {
+      command.to_s
+    }.to_not raise_error
   end
 
 end
