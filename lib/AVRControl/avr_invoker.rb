@@ -1,4 +1,3 @@
-require 'net/telnet'
 require 'socket'
 
 module AVRControl
@@ -10,12 +9,23 @@ module AVRControl
     end
 
     def invoke(command)
-      TCPSocket.open(@host, 23) do |sock|
-        sleep 0.3
-        sock.puts command.to_s
-        sleep 0.3
+      begin
+        TCPSocket.open(@host, 23) do |sock|
+          sock.write command.to_s
+          sock.flush
+          if command.response?
+            sleep 0.5
+            begin
+              command.response = sock.recv_nonblock 1024
+            rescue => e
+              #TODO: something here
+            end
+          end
+        end
+        return true
+      rescue => e
+        return false
       end
     end
-
   end
 end
