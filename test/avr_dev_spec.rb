@@ -1,11 +1,15 @@
 require 'rspec'
-require '../lib/AVRControl'
+require 'AVRControl'
 
 describe 'Controlling my denon receiver' do
 
   before :each do
     @host = '192.168.1.75'
     @invoker = AVRControl::AVRInvoker.new(@host)
+  end
+
+  after :each do
+    sleep 1
   end
 
   it 'should be able to power it off' do
@@ -17,8 +21,12 @@ describe 'Controlling my denon receiver' do
     command = AVRControl::AVRCommand.for :main_query
     command.should_not be_nil
     @invoker.invoke(command).should be_true
-    puts command.response
     command.response.should_not be_nil
+  end
+
+  it 'should be able to power it on' do
+    command = AVRControl::AVRCommand.for :power_on
+    @invoker.invoke(command).should be_true
   end
 
   it 'should not allow commands without enough params' do
@@ -35,6 +43,26 @@ describe 'Controlling my denon receiver' do
     expect {
       command.to_s
     }.to_not raise_error
+  end
+
+  it 'should allow compound commands' do
+    cmd = AVRControl::AVRCompoundCommand.new('MV', 1)
+    cmd << '80'
+    cmd.to_s.should == "MV80\r"
+  end
+
+  it 'should allow compound commands with more than one param' do
+    cmd = AVRControl::AVRCompoundCommand.new('MV', 2)
+    cmd << '80'
+    cmd << '40'
+    cmd.to_s.should == "MV80 40\r"
+  end
+
+  it 'should instantiate the proper command type based off of the config' do
+    cmd = AVRControl::AVRCommand.for :main_volume_set
+    cmd.should be_an_instance_of AVRControl::AVRCompoundCommand
+    cmd = AVRControl::AVRCommand.for :power_on
+    cmd.should be_an_instance_of AVRControl::AVRCommand
   end
 
 end
