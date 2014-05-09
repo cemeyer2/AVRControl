@@ -95,6 +95,13 @@ describe 'Controlling my denon receiver' do
     }.to raise_error ArgumentError
   end
 
+  it 'should respond that there are no parameters on a command when none have been specified' do
+    command = AVRControl::AVRCommand.new('FOO', 10)
+    command.param_count.should eql 0
+    command << 'bar'
+    command.param_count.should eql 1
+  end
+
   it 'should be able to discover denon receivers on the local network' do
     receivers = AVRControl::AVRContext.discover
     receivers.first.host.should eql '192.168.1.75'

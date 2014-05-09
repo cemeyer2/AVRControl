@@ -25,6 +25,10 @@ module AVRControl
       to_s.include? '?'
     end
 
+    def param_count
+      @command.length - 1
+    end
+
     class << self
       def for sym
         hash = AVRControl::COMMANDS[sym]
