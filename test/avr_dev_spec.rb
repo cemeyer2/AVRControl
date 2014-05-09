@@ -71,6 +71,12 @@ describe 'Controlling my denon receiver' do
     @invoker.invoke(command).should be_true
   end
 
+  it 'should not allow invalid commands' do
+    expect {
+      AVRControl::AVRCommand.for :this_doesnt_exist
+    }.to raise_error ArgumentError
+  end
+
   it 'should be able to do look for upnp' do
     require 'playful/ssdp'
     obj = Playful::SSDP.search
