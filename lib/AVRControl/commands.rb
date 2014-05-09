@@ -39,6 +39,22 @@ module AVRControl
         :back_volume_up => {:string => 'CVSB UP'},
         :back_volume_down => {:string => 'CVSB DOWN'},
         :back_volume_set => {:string => 'CVSB', :params => 1},
+        :front_left_height_up => {:string => 'CVFHL UP'},
+        :front_left_height_down => {:string => 'CVFHL DOWN'},
+        :front_left_height_set => {:string => 'CVFHL', :params => 1},
+        :front_right_height_up => {:string => 'CVFHR UP'},
+        :front_right_height_down => {:string => 'CVFHR DOWN'},
+        :front_right_height_set => {:string => 'CVFHR', :params => 1},
+        :front_left_width_up => {:string => 'CVFWL UP'},
+        :front_left_width_down => {:string => 'CVFWL DOWN'},
+        :front_left_width_set => {:string => 'CVFWL', :params => 1},
+        :front_right_width_up => {:string => 'CVFWR UP'},
+        :front_right_width_down => {:string => 'CVFWR DOWN'},
+        :front_right_width_set => {:string => 'CVFWR', :params => 1},
+        :channel_volume_status => {:string => 'CV?'},
+        :mute_on => {:string => 'MUON'},
+        :mute_off => {:string => 'MUOFF'},
+        :mute_status => {:string => 'MU?'},
     }
     COMMANDS.freeze
   end
