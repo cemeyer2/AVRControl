@@ -65,4 +65,15 @@ describe 'Controlling my denon receiver' do
     cmd.should be_an_instance_of AVRControl::AVRCommand
   end
 
+  it 'should be able to set the volume' do
+    command = AVRControl::AVRCommand.for :main_volume_set
+    command << '40'
+    @invoker.invoke(command).should be_true
+  end
+
+  it 'should be able to do look for upnp' do
+    require 'playful/ssdp'
+    obj = Playful::SSDP.search
+    obj
+  end
 end

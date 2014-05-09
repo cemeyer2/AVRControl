@@ -18,7 +18,7 @@ module AVRControl
             begin
               command.response = sock.recv_nonblock(1024).chomp
             rescue => e
-              #TODO: something here
+              return false
             end
           end
         end
