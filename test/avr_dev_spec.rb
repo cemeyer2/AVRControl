@@ -77,9 +77,8 @@ describe 'Controlling my denon receiver' do
     }.to raise_error ArgumentError
   end
 
-  it 'should be able to do look for upnp' do
-    require 'playful/ssdp'
-    obj = Playful::SSDP.search
-    obj
+  it 'should be able to discover denon receivers on the local network' do
+    receivers = AVRControl::AVRContext.discover
+    receivers.first.host.should eql '192.168.1.75'
   end
 end

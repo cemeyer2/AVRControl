@@ -1,3 +1,6 @@
+require 'playful/ssdp'
+require 'uri'
+
 require 'AVRControl/version'
 require 'AVRControl/commands'
 require 'AVRControl/avr_context'
