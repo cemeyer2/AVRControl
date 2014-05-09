@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "AVRControl"
   spec.version       = AVRControl::VERSION
   spec.authors       = ["Charlie Meyer"]
-  spec.email         = ["cmeyer@homeaway.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.email = ["charlie@charliemeyer.net"]
+  spec.summary = %q{A library to control Denon and Marantz audio receivers}
+  spec.description = %q{A library to control Denon and Marantz audio receivers}
+  spec.homepage = "www.charliemeyer.net"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
