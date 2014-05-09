@@ -29,6 +29,7 @@ module AVRControl
       def for sym
         if AVRControl::COMMANDS.has_key? sym
           hash = AVRControl::COMMANDS[sym]
+          raise ArgumentError.new('Command not found') if hash.nil?
           params = hash[:params] ||= 0
           if hash[:compound]
             AVRCompoundCommand.new hash[:string], params
