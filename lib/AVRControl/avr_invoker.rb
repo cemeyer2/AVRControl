@@ -10,7 +10,7 @@ module AVRControl
 
     def invoke(command)
       begin
-        TCPSocket.open(@context.host, 23) do |sock|
+        TCPSocket.open(@context.host, @context.port) do |sock|
           sock.write command.to_s
           sock.flush
           if command.response?
@@ -18,6 +18,7 @@ module AVRControl
             begin
               command.response = sock.recv_nonblock(1024).chomp
             rescue => e
+              command.response = e.message
               return false
             end
           end
