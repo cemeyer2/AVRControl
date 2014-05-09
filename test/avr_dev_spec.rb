@@ -29,9 +29,18 @@ describe 'Controlling my denon receiver' do
     @invoker.invoke(command).should be_true
   end
 
-  it 'should not allow commands without enough params' do
+  it 'should not allow commands when they require parameters but none are specified' do
     command = AVRControl::AVRCommand.new('FOO', 5)
     expect {
+      command.to_s
+    }.to raise_error(ArgumentError)
+  end
+
+  it 'should not allow commands when they require parameters but less than the required number are specified' do
+    command = AVRControl::AVRCommand.new('FOO', 5)
+    expect {
+      command << 'bar'
+      command << 'baz'
       command.to_s
     }.to raise_error(ArgumentError)
   end
@@ -43,6 +52,15 @@ describe 'Controlling my denon receiver' do
     expect {
       command.to_s
     }.to_not raise_error
+  end
+
+  it 'should only emit ASCII commands' do
+    expect {
+      cmd = AVRControl::AVRCommand.new('FOO', 2)
+      cmd << '𝖇𝖆𝖗'
+      cmd << 'zɐq'
+      cmd.to_s
+    }.to raise_error Encoding::UndefinedConversionError
   end
 
   it 'should allow compound commands' do
