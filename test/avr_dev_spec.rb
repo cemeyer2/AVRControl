@@ -4,8 +4,8 @@ require 'AVRControl'
 describe 'Controlling my denon receiver' do
 
   before :each do
-    @host = '192.168.1.75'
-    @invoker = AVRControl::AVRInvoker.new(@host)
+    @context = AVRControl::AVRContext.new('192.168.1.75')
+    @invoker = AVRControl::AVRInvoker.new(@context)
   end
 
   after :each do

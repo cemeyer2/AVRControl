@@ -4,13 +4,13 @@ module AVRControl
 
   class AVRInvoker
 
-    def initialize(host)
-      @host = host
+    def initialize(context)
+      @context = context
     end
 
     def invoke(command)
       begin
-        TCPSocket.open(@host, 23) do |sock|
+        TCPSocket.open(@context.host, 23) do |sock|
           sock.write command.to_s
           sock.flush
           if command.response?
