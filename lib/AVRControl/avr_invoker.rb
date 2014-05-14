@@ -23,8 +23,11 @@ module AVRControl
             end
           end
         end
+        sleep 0.5
         return true
       rescue => e
+        command.response = e.message
+        sleep 0.5
         return false
       end
     end

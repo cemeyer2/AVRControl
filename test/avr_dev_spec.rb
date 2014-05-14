@@ -85,7 +85,7 @@ describe 'Controlling my denon receiver' do
 
   it 'should be able to set the volume' do
     command = AVRControl::AVRCommand.for :main_volume_set
-    command << '40'
+    command << '60'
     @invoker.invoke(command).should be_true
   end
 
@@ -93,6 +93,10 @@ describe 'Controlling my denon receiver' do
     expect {
       AVRControl::AVRCommand.for :this_doesnt_exist
     }.to raise_error ArgumentError
+  end
+
+  it 'should be able to turn down the back right volume' do
+    @invoker.invoke(AVRControl::AVRCommand.for :back_right_volume_down).should be_true
   end
 
   it 'should respond that there are no parameters on a command when none have been specified' do
@@ -104,6 +108,8 @@ describe 'Controlling my denon receiver' do
 
   it 'should be able to discover denon receivers on the local network' do
     receivers = AVRControl::AVRContext.discover
-    receivers.first.host.should eql '192.168.1.75'
+    receivers.should be_a_kind_of Array
+    receivers.size.should be 1
+    receivers.first.host.should eql @context.host
   end
 end

@@ -28,7 +28,6 @@ module AVRControl
             end
           end
         end
-        sleep 0.5 #need this so that we dont run a command right away, as the receivers tend to crash if hit too often
         receivers
       end
     end
