@@ -4,7 +4,7 @@ require 'AVRControl'
 describe 'Controlling my denon receiver' do
 
   before :each do
-    @context = AVRControl::AVRContext.new('192.168.1.75')
+    @context = AVRControl::AVRContext.new('192.168.1.110')
     @invoker = AVRControl::AVRInvoker.new(@context)
   end
 
@@ -14,19 +14,19 @@ describe 'Controlling my denon receiver' do
 
   it 'should be able to power it off' do
     command = AVRControl::AVRCommand.new("PWSTANDBY")
-    @invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_truthy
   end
 
   it 'should be able to query power' do
     command = AVRControl::AVRCommand.for :main_query
     command.should_not be_nil
-    @invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_truthy
     command.response.should_not be_nil
   end
 
   it 'should be able to power it on' do
     command = AVRControl::AVRCommand.for :power_on
-    @invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_truthy
   end
 
   it 'should not allow commands when they require parameters but none are specified' do
@@ -57,8 +57,8 @@ describe 'Controlling my denon receiver' do
   it 'should only emit ASCII commands' do
     expect {
       cmd = AVRControl::AVRCommand.new('FOO', 2)
-      cmd << '𝖇𝖆𝖗'
-      cmd << 'zɐq'
+      cmd << "zɐq"
+      cmd << "zɐq"
       cmd.to_s
     }.to raise_error Encoding::UndefinedConversionError
   end
@@ -86,7 +86,7 @@ describe 'Controlling my denon receiver' do
   it 'should be able to set the volume' do
     command = AVRControl::AVRCommand.for :main_volume_set
     command << '40'
-    @invoker.invoke(command).should be_true
+    @invoker.invoke(command).should be_truthy
   end
 
   it 'should not allow invalid commands' do
@@ -104,6 +104,6 @@ describe 'Controlling my denon receiver' do
 
   it 'should be able to discover denon receivers on the local network' do
     receivers = AVRControl::AVRContext.discover
-    receivers.first.host.should eql '192.168.1.75'
+    receivers.first.host.should eql '192.168.1.110'
   end
 end

@@ -1,4 +1,4 @@
-require 'playful/ssdp'
+require 'frisky/ssdp'
 require 'uri'
 
 require 'AVRControl/version'

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email = ["charlie@charliemeyer.net"]
   spec.summary = %q{A library to control Denon and Marantz audio receivers}
   spec.description = %q{A library to control Denon and Marantz audio receivers}
-  spec.homepage = "www.charliemeyer.net"
+  spec.homepage = "https://github.com/cemeyer2/AVRControl"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
   spec.add_development_dependency 'rspec'
-  spec.add_runtime_dependency 'playful'
+  spec.add_runtime_dependency 'frisky'
 end
